@@ -1,20 +1,16 @@
-// CPU with parallelization version
-// Parallelization is implemented with OpenMP
+// CPU with no parallelization version
 
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <omp.h>
 using namespace std;
 
 int main(int argc, char const *argv[])
-{
-    if (argc < 2) {
-        cout << "Wrong number of arguments!!" << endl;
-        return -1;
-    }
-    int n = atoi(argv[1]);
-
+{   
+    int n;
+    cout << "Please input the number of columns/rows of the matrix: " << endl;
+    cout << "(Input a number n will calculate the multiplication of two matrices both of size n * n)" << endl;
+    cin >> n;
     //
     // We will next generate two matrices both of size n*n with random int number with range [1, 512]
     // We will also generate a zero matrix to store the result of multiplication
@@ -43,17 +39,11 @@ int main(int argc, char const *argv[])
     //
 
     int report_line = 10;
-    double start_actual_time = omp_get_wtime();
+    clock_t start = clock();
 
-    //
-    // Notice the difference here
-    //
-    
-    #pragma omp parallel for 
     for (int i = 0; i < n; i++) {
-        int thread_num = omp_get_thread_num();
         if (i % report_line == 0) {
-            cout << "Thread " << thread_num  << " reaches line " << i << endl;
+            cout << "Finish calculating line " << i << endl;
         }
         for (int j = 0; j < n; j++) {
 
@@ -67,9 +57,9 @@ int main(int argc, char const *argv[])
         }
     }    
 
-    double duration_actual = omp_get_wtime() - start_actual_time;
+    double duration = (clock() - start) / (double) CLOCKS_PER_SEC;
 
-    cout << "It takes " << duration_actual << " seconds actual time to multiply two matrices with size " << n << " * " << n << endl;
+    cout << "It takes " << duration << " seconds to multiply two matrices with size " << n << " * " << n << endl;
     
     //
     // Clean up the memory, you do not need to understand this part

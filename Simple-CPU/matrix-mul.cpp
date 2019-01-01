@@ -1,17 +1,17 @@
+// CPU with no parallelization version
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
 
 int main(int argc, char const *argv[])
-{
-    if (argc != 2) {
-        cout << "Wrong number of argument!" << endl;
+{   
+    if (argc < 2) {
+        cout << "Wrong number of arguments!!" << endl;
         return -1;
     }
-    
     int n = atoi(argv[1]);
-
     //
     // We will next generate two matrices both of size n*n with random int number with range [1, 512]
     // We will also generate a zero matrix to store the result of multiplication

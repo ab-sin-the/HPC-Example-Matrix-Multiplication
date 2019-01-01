@@ -26,10 +26,11 @@ void multiply_matrix(int n, int* matrixA, int* matrixB, int* matrix_res) {
 
 int main(int argc, char const *argv[])
 {   
-    int n;
-    cout << "Please input the number of columns/rows of the matrix: " << endl;
-    cout << "(Input a number n will calculate the multiplication of two matrices both of size n * n)" << endl;
-    cin >> n;
+    if (argc < 2) {
+        cout << "Wrong number of arguments!!" << endl;
+        return -1;
+    }
+    int n = atoi(argv[1]);
     //
     // We will next generate two matrices both of size n*n with random int number with range [1, 512]
     // We will also generate a zero matrix to store the result of multiplication
@@ -82,7 +83,7 @@ int main(int argc, char const *argv[])
 
     
     cudaMemcpy(matrix_res, dMatrix_res, n * n * sizeof(int), cudaMemcpyDeviceToHost);
-    cout << "It takes " << duration << " seconds to multiply two matrices with size " << n << " * " << n << endl;
+    cout << "It takes " << (clock() - start) / (double) CLOCKS_PER_SEC  << " seconds to multiply two matrices with size " << n << " * " << n << endl;
     //
     // Clean up the memory, you do not need to understand this part
     //
