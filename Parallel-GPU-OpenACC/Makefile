@@ -1,4 +1,4 @@
-CC = g++
+CC = pgcc
 
 matrix-mul:matrix-mul.cpp
-	${CC} matrix-mul.cpp -fopenmp -o matrix-mul 
+	${CC}  -acc  matrix-mul.cpp
